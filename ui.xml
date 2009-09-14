@@ -1,0 +1,13 @@
+<ui>
+<menubar>
+ <menu action="File">
+  <menuitem action="OpenF" />
+  <menuitem action="CloseF" />
+  <separator />
+  <menuitem action="Quit" />
+ </menu>
+ <menu action="Help">
+  <menuitem action="About" />
+ </menu>
+</menubar>
+</ui>
