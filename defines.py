@@ -1,5 +1,5 @@
 APP_NAME = "CCTool"
-VERSION = "0.1"
+VERSION = "0.2"
 AUTHORS = ["Victor VIEUX aka VV"]
 
 CON_MAGIC = "CON "
