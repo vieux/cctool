@@ -3,6 +3,7 @@ GOLD : +95 (2)
 
 premier a +120
 
+1 : fini le jeux
 1 : 80
 1 : LVL - 1
 2 : 0000
@@ -13,10 +14,22 @@ premier a +120
 1 : defense
 1 : magie
 1 : agilite
-2 : ????
+1 : prgess left side
+1 : prgess right side
+1 : toujours 0
+1 : potions
+1 : bombes
+1 : sandwitch
+1 : collectables : FE
+1 : 1 to enable insane
+4 : pad
 
 tot = 14
 
 real = 24
 
 ordre : Green R B O Grey
+
+
+
+wep a test : 24, 39, 2

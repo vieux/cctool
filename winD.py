@@ -58,41 +58,37 @@ class winD(gtk.Window):
         #Global infos
         GOLDBox = gtk.HBox(False, 10)
         GOLDBox.pack_start(gtk.Label("Current GOLD : "), False, False, 10)
-        self.GOLDEdit = edit(8, True)
+        self.GOLDEdit = edit(8, False)
         GOLDBox.pack_start(self.GOLDEdit, False, False, 0)
         vbox.pack_start(GOLDBox, False, False, 10)
 
-        self.liststore = gtk.ListStore(gtk.gdk.Pixbuf, str, str, str, str, str, str, str)
+        self.liststore = gtk.ListStore(gtk.gdk.Pixbuf, str, str, str, str, str, str, str, str, str ,str ,str)
+        
         for i in range (0, len(persos.persos)):
-            self.iters.append(self.liststore.append((gtk.gdk.pixbuf_new_from_file('imgs/%s' % persos.persos[i][1]), persos.persos[i][0], 0, 0, "0/32", "0/32" ,"0/32" ,"0/32")))
+            img = 'imgs/%s.jpg' % (persos.persos[i].replace(" ", ''))
+            self.iters.append(self.liststore.append((gtk.gdk.pixbuf_new_from_file(img), persos.persos[i], 0, 0, "0/32", "0/32" ,"0/32" ,"0/32", 0, 0, 0, "No")))
 
         cell = gtk.CellRendererText()
-        colimg = gtk.TreeViewColumn("Pic", gtk.CellRendererPixbuf(), pixbuf=0)
-        col0 = gtk.TreeViewColumn("Character", cell, text=1)
-        col1 = gtk.TreeViewColumn("Level", cell, text=2)
-        col2 = gtk.TreeViewColumn("XP", cell, text=3)
-        col3 = gtk.TreeViewColumn("Strengh", cell, text=4)
-        col4 = gtk.TreeViewColumn("Defense", cell, text=5)
-        col5 = gtk.TreeViewColumn("Magic", cell, text=6)
-        col6 = gtk.TreeViewColumn("Agility", cell, text=7)
+        cols = [gtk.TreeViewColumn("Pic", gtk.CellRendererPixbuf(), pixbuf=0),
+                gtk.TreeViewColumn("Character", cell, text=1),
+                gtk.TreeViewColumn("Level", cell, text=2),
+                gtk.TreeViewColumn("XP", cell, text=3),
+                gtk.TreeViewColumn("Strengh", cell, text=4),
+                gtk.TreeViewColumn("Defense", cell, text=5),
+                gtk.TreeViewColumn("Magic", cell, text=6),
+                gtk.TreeViewColumn("Agility", cell, text=7),
+                gtk.TreeViewColumn("Potions", cell, text=8),
+                gtk.TreeViewColumn("Bombes", cell, text=9),
+                gtk.TreeViewColumn("Sandwitchs", cell, text=10),
+                gtk.TreeViewColumn("Done ?", cell, text=11)]
+        
         self.tree = gtk.TreeView(self.liststore)
-        self.tree.append_column(colimg)
-        self.tree.append_column(col0)
-        self.tree.append_column(col1)
-        self.tree.append_column(col2)
-        self.tree.append_column(col3)
-        self.tree.append_column(col4)
-        self.tree.append_column(col5)
-        self.tree.append_column(col6)
+        for i in range(0, len(cols)):
+            self.tree.append_column(cols[i])
         treeB = gtk.ScrolledWindow()
         treeB.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         treeB.add(self.tree)
-        vbox.pack_start(treeB, True, True, 10)
-        
-        self.Bsave = gtk.Button("Save")
-        self.Bsave.connect("clicked", self.save)
-        vbox.pack_start(self.Bsave, False, True, 10)
-        
+        vbox.pack_start(treeB, True, True, 10)        
 
     def showAbout(self, foo):
         about =  gtk.AboutDialog()
@@ -125,17 +121,11 @@ class winD(gtk.Window):
                 self.liststore.set(self.iters[i], 5, "0/25")
                 self.liststore.set(self.iters[i], 6, "0/25")
                 self.liststore.set(self.iters[i], 7, "0/25")
+                self.liststore.set(self.iters[i], 8, 0)
+                self.liststore.set(self.iters[i], 9, 0)
+                self.liststore.set(self.iters[i], 10, 0)
+                self.liststore.set(self.iters[i], 11, "No")
 
             self.GOLDEdit.set_text("")
             self.MEdit.set_text("000000000000000")
             self.PEdit.set_text("000000000000000")
-
-    def save(self, foo = None):
-        if self.__file:
-            if self.__file.save():
-                self.closeFile()
-            else:
-                m = gtk.MessageDialog(self, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE, "An error occured, please check values")
-                m.run()
-                m.destroy()
-        
